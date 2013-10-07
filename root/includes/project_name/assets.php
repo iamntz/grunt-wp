@@ -44,6 +44,10 @@ class {%= projectNamespace %}Assets {
     wp_enqueue_style( '{%= name %}' );
     wp_enqueue_script( '{%= name %}' );
 
+    if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ){
+      wp_enqueue_script( 'comment-reply' );
+    }
+
     $stored_settings = (array) get_option( '{%= name %}-settings' );
     $stored_settings = array_merge( array(
       "foo" => "bar"

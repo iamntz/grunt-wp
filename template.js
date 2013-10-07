@@ -18,21 +18,26 @@ exports.template = function(grunt, init, done) {
   init.process({type: 'ntz-wp'}, [
 
   init.prompt('name'),
-  // init.prompt('description', 'N/A'),
-  // init.prompt('version', "0.0.1"),
+  {
+    name:'projectNamespace',
+    message:'Project Namespace (leave empty to use project name)',
+    default: null
+  },
+  init.prompt('description', 'N/A'),
+  init.prompt('version', "0.0.1"),
 
-  // init.prompt('homepage', "N/A"),
-  // init.prompt('author_name'),
-  // init.prompt('author_email'),
-  // init.prompt('author_url', "N/A"),
+  init.prompt('homepage', "N/A"),
+  init.prompt('author_name'),
+  init.prompt('author_email'),
+  init.prompt('author_url', "N/A"),
 
-  // init.prompt('licenses', 'Private'),
+  init.prompt('licenses', 'Private'),
 
-  // init.prompt('repository', ""),
-  // init.prompt('bugs', ""),
+  init.prompt('repository', ""),
+  init.prompt('bugs', ""),
 
   ], function(err, props) {
-    props.projectNamespace = ( props.name.charAt(0).toUpperCase() + props.name.slice(1).toLowerCase() );
+    props.projectNamespace = props.projectNamespace || ( props.name.charAt(0).toUpperCase() + props.name.slice(1).toLowerCase() );
 
     var originalFiles = init.filesToCopy(props);
     var files = {};
