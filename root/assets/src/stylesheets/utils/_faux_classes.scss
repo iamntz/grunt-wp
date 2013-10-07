@@ -1,0 +1,10 @@
+%box-sized {
+  @include prefixFree( 'box-sizing', border-box );
+}
+
+%clearfix {
+  &:before,
+  &:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
+  &:after { clear:both; }
+  .lte7 & { zoom:1; }
+}

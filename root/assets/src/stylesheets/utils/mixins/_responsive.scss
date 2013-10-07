@@ -1,0 +1,21 @@
+$responsive-small-screen: 320px !default;
+$responsive-large-screen: 1024px !default;
+
+@mixin respond-to($media) {
+  @if $media == handhelds {
+    @media only screen and (max-width: $responsive-small-screen) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $responsive-small-screen + 1) and (max-width: $responsive-large-screen - 1) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $responsive-large-screen) { @content; }
+  }
+}
+
+//Usage
+//.foo {
+//  @include respond-to(handhelds) { width: 100% ;}
+//  @include respond-to(medium-screens) { width: 125px; }
+//  @include respond-to(wide-screens) { float: none; }
+//}
