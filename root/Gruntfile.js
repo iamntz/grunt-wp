@@ -5,17 +5,21 @@ module.exports = function(grunt) {
 
     //  Javascripts
     jshint: {
-      files: [ 'Gruntfile.js', '<%= uglify.app.src %>', '<%= uglify.admin.src %>' ],
+      files: [
+        'Gruntfile.js'
+        ,'<%= uglify.app.src %>'
+        ,'<%= uglify.admin.src %>'
+      ],
       options: {
         globals: {
-          jQuery: true
-          ,console: true
-          ,module: true
+          jQuery   : true
+          ,console : true
+          ,module  : true
           ,document: true
         },
         laxcomma : true
-        ,laxbreak : true
-        ,sub: true
+        ,laxbreak: true
+        ,sub     : true
       }
     },
 
@@ -37,18 +41,27 @@ module.exports = function(grunt) {
       }
 
       ,app: {
-        src: [ 'assets/src/javascripts/*.js', 'assets/src/javascripts/**/*.js', '!assets/src/javascripts/admin/*.js', '!assets/src/javascripts/admin/**/*.js' ],
+        src: [
+          'assets/src/javascripts/*.js'
+          ,'assets/src/javascripts/**/*.js'
+          ,'!assets/src/javascripts/admin/*.js'
+          ,'!assets/src/javascripts/admin/**/*.js'
+        ],
         dest: 'assets/dist/javascripts/<%= pkg.name %>.min.js'
       }
 
       ,admin: {
-        src: [ 'assets/src/javascripts/admin/*.js', 'assets/src/javascripts/admin/**/*.js' ],
+        src: [
+          'assets/src/javascripts/admin/*.js'
+          ,'assets/src/javascripts/admin/**/*.js'
+        ],
         dest: 'assets/dist/javascripts/<%= pkg.name %>.admin.min.js'
       }
 
       ,vendor : {
         src: [
-          'assets/src/vendor/jquery/jquery-2.0.2.js',
+          'assets/src/vendor/jquery/jquery-2.0.2.js'
+        ]
         dest: 'assets/dist/vendor/vendor.min.js'
       }
     },
@@ -65,8 +78,10 @@ module.exports = function(grunt) {
       },
       app: {
         src : [
-          'assets/src/stylesheets/*.scss', 'assets/src/stylesheets/**/*.scss',
-          '!assets/src/stylesheets/admin/*.scss', '!assets/src/stylesheets/admin/**/*.scss'
+          'assets/src/stylesheets/*.scss'
+          ,'assets/src/stylesheets/**/*.scss'
+          ,'!assets/src/stylesheets/admin/*.scss'
+          ,'!assets/src/stylesheets/admin/**/*.scss'
         ],
         dest : 'assets/dist/stylesheets/screen.css',
         options : {
@@ -74,7 +89,10 @@ module.exports = function(grunt) {
         }
       },
       admin: {
-        src : [ 'assets/src/stylesheets/admin/*.scss', 'assets/src/stylesheets/admin/**/*.scss' ],
+        src : [
+          'assets/src/stylesheets/admin/*.scss'
+          ,'assets/src/stylesheets/admin/**/*.scss'
+        ],
         dest: 'assets/dist/stylesheets/admin.css'
       }
     },
@@ -88,10 +106,10 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'assets/src',
             src: [
-              'vendor/**/*',
-              'images/*',
-              'images/**/*',
-              'fonts/**/*'
+              'vendor/**/*'
+              ,'images/*'
+              ,'images/**/*'
+              ,'fonts/**/*'
             ],
             dest: 'assets/dist/'
           }
@@ -107,7 +125,10 @@ module.exports = function(grunt) {
       },
 
       qunit : {
-        files: [ 'assets/src/tests/*.test.html', 'assets/src/tests/*.test.js' ],
+        files: [
+          'assets/src/tests/*.test.html'
+          ,'assets/src/tests/*.test.js'
+        ],
         tasks: [ 'jshint', 'qunit' ]
       },
 
@@ -129,10 +150,10 @@ module.exports = function(grunt) {
 
       assets : {
         files: [
-          'assets/src/vendor/**/*',
-          'assets/src/images/*',
-          'assets/src/images/**/*',
-          'assets/src/fonts/**/*'
+          'assets/src/vendor/**/*'
+          ,'assets/src/images/*'
+          ,'assets/src/images/**/*'
+          ,'assets/src/fonts/**/*'
         ],
         tasks: [ 'copy' ]
       },

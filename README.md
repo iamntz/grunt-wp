@@ -12,13 +12,13 @@ Once grunt-init is installed, place this template in your `~/.grunt-init/` direc
 ### Linux/Mac Users
 
 ```
-git clone git@github.com:iamntz/grunt-baseproject.git ~/.grunt-init/ntz-baseproject
+git clone git@github.com:iamntz/grunt-wp.git ~/.grunt-init/ntz-wp
 ```
 
 ### Windows Users
 
 ```
-git clone git@github.com:iamntz/grunt-baseproject.git %USERPROFILE%/.grunt-init/ntz-baseproject
+git clone git@github.com:iamntz/grunt-wp.git %USERPROFILE%/.grunt-init/ntz-wp
 ```
 
 ## Usage
@@ -26,4 +26,4 @@ git clone git@github.com:iamntz/grunt-baseproject.git %USERPROFILE%/.grunt-init/
 At the command-line, cd into an empty directory, run this command and follow the prompts.
 
 ```
-grunt-init ntz-baseproject
+grunt-init ntz-wp

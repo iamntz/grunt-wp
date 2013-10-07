@@ -1,5 +1,4 @@
 /*
- * grunt-baseproject
  * http://iamntz.com/
  *
  * Copyright (c) 2013 Ionuț "iamntz" Staicu
@@ -16,7 +15,7 @@ exports.warnOn = '*';
 
 exports.template = function(grunt, init, done) {
 
-  init.process({type: 'ntz-baseproject'}, [
+  init.process({type: 'ntz-wp'}, [
 
   init.prompt('name'),
   init.prompt('description', 'N/A'),
