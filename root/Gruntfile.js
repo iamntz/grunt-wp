@@ -73,7 +73,7 @@ module.exports = function(grunt) {
     // styles
     sass: {
       options: {
-        style    : 'compressed',
+        style    : 'expanded',
         sourcemap:true
       },
       app: {
@@ -173,6 +173,20 @@ module.exports = function(grunt) {
       dist: {
         src: [ '<%= sass.admin.dest %>', '<%= sass.app.dest %>' ]
       }
+    },
+
+
+    sprite:{
+      all: {
+        src    : ['assets/src/images/sprites/*.png'],
+        destImg: 'assets/dist/images/sprites.png',
+        imgPath: '../images/sprites.png',
+        algorithm: 'binary-tree',
+        padding: 10,
+        engine : 'auto',
+        destCSS: 'assets/src/stylesheets/_sprites.scss',
+        cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache'
+      }
     }
   });
 
@@ -185,10 +199,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-csscss');
+  grunt.loadNpmTasks('grunt-spritesmith');
+
 
 
   grunt.registerTask('js', [ 'jshint', 'qunit', 'uglify']);
-  grunt.registerTask('css', [ 'sass' ]);
+  grunt.registerTask('css', [ 'sprite', 'sass' ]);
   grunt.registerTask('assets', [ 'copy' ]);
   grunt.registerTask('admin', [ 'sass:admin', 'uglify:admin' ]);
 
