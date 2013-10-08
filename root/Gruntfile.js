@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       ,vendor : {
         src: [
           'assets/src/vendor/jquery/jquery-2.0.2.js'
-        ]
+        ],
         dest: 'assets/dist/vendor/vendor.min.js'
       }
     },

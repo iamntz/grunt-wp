@@ -55,23 +55,20 @@ exports.template = function(grunt, init, done) {
       version    : props.version,
       author     : props.author,
       bugs       : props.bugs,
-      repository : {
-        url : props.repository,
-        type: "git"
-      },
+      repository : props.repository
     };
 
 
     packageJSON.devDependencies = {
-      "grunt"                  : ">0"
-      ,"grunt-contrib-uglify"  : ">0"
-      ,"grunt-contrib-jshint"  : ">0"
-      ,"grunt-contrib-watch"   : ">0"
-      ,"grunt-contrib-concat"  : ">0"
-      ,"grunt-contrib-copy"    : ">0"
-      ,"grunt-contrib-qunit"   : ">0"
-      ,"grunt-csscss"          : ">0"
-      ,"grunt-contrib-sass"    : ">0"
+      "grunt"                  : "~0"
+      ,"grunt-contrib-uglify"  : "~0"
+      ,"grunt-contrib-jshint"  : "~0"
+      ,"grunt-contrib-watch"   : "~0"
+      ,"grunt-contrib-concat"  : "~0"
+      ,"grunt-contrib-copy"    : "~0"
+      ,"grunt-contrib-qunit"   : "~0"
+      ,"grunt-csscss"          : "~0"
+      ,"grunt-contrib-sass"    : "~0"
     }
 
     init.writePackageJSON('package.json', packageJSON );
