@@ -70,6 +70,7 @@ module.exports = function(grunt) {
       all: [ "assets/src/tests/*.html"]
     },
 
+
     // styles
     sass: {
       options: {
@@ -117,11 +118,12 @@ module.exports = function(grunt) {
       }
     },
 
+
     // awesomeness
     watch: {
       options: {
-        nospawn: true,
-        debounceDelay: 250
+        nospawn       : true
+        ,debounceDelay: 250
       },
 
       qunit : {
@@ -144,7 +146,10 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         },
-        files: [ '<%= sass.admin.src %>', '<%= uglify.admin.src %>' ],
+        files: [
+          '<%= sass.admin.src %>'
+          ,'<%= uglify.admin.src %>'
+        ],
         tasks : [ "admin" ]
       },
 
@@ -158,16 +163,12 @@ module.exports = function(grunt) {
         tasks: [ 'copy' ]
       },
 
-      // sprites: {
-      //   files: [ '<%= spritesheet.app.src %>' ],
-      //   tasks: [ 'spritesheet', 'sass', 'copy' ]
-      // },
-
       js : {
         files: [ '<%= uglify.app.src %>' ],
         tasks: [ 'jshint', 'uglify' ]
       }
     },
+
 
     csscss: {
       dist: {
@@ -178,14 +179,14 @@ module.exports = function(grunt) {
 
     sprite:{
       all: {
-        src    : ['assets/src/images/sprites/*.png'],
-        destImg: 'assets/dist/images/sprites.png',
-        imgPath: '../images/sprites.png',
-        algorithm: 'binary-tree',
-        padding: 10,
-        engine : 'auto',
-        destCSS: 'assets/src/stylesheets/_sprites.scss',
-        cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache'
+        src         : ['assets/src/images/sprites/*.png']
+        ,destImg    : 'assets/dist/images/sprites.png'
+        ,imgPath    : '../images/sprites.png'
+        ,algorithm  : 'binary-tree'
+        ,padding    : 10
+        ,engine     : 'auto'
+        ,destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss'
+        ,cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache'
       }
     }
   });
@@ -194,7 +195,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -209,4 +209,5 @@ module.exports = function(grunt) {
   grunt.registerTask('admin', [ 'sass:admin', 'uglify:admin' ]);
 
   grunt.registerTask('default', [ 'js', 'css', 'assets' ]);
+  grunt.registerTask('dev', ['watch']);
 };

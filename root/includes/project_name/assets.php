@@ -33,7 +33,7 @@ class {%= projectNamespace %}Assets {
 
   public function enqueue_assets(){
     $this->enqueue_common_assets();
-    wp_register_style( '{%= name %}', THEME_PATH . "/assets/dist/stylesheets/screen.css", array( '{%= name %}-fonts' ), ASSETS_VERSION, 'screen' );
+    wp_register_style( '{%= name %}', THEME_PATH . "/assets/dist/stylesheets/screen.css", array(), ASSETS_VERSION, 'screen' );
     wp_register_script( '{%= name %}-vendor', THEME_PATH . "/assets/dist/vendor/vendor.min.js", array(), ASSETS_VERSION, 'true' );
     wp_register_script( '{%= name %}', THEME_PATH . "/assets/dist/javascripts/{%= name %}.min.js", array(
       "jquery"
