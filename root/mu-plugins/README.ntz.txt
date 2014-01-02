@@ -1,0 +1,1 @@
+Move (or make a symlink to) this file into wp-content/ folder
