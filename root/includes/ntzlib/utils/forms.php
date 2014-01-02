@@ -1,11 +1,12 @@
-<?php
+<?php namespace ntzlib\utils;
 
-class NtzForms extends NtzUtils {
-  function __construct() {}
-
+/**
+ * A collection of static utilites to create form elements inspired by Laravel framework
+ */
+class Forms extends Utils {
 
   /**
-   * Basic input helper.
+   * Generic input helper.
    * @param  string  $name the name of the input
    * @param  array   $atts attributes for input element
    * @return string
@@ -14,7 +15,11 @@ class NtzForms extends NtzUtils {
     $atts = array_merge( array(
       "type" => "text"
     ), $atts );
-    return sprintf( '<input name="%s"%s>', $name, parent::convert_array_to_html_attributes( $atts ) );
+    return sprintf(
+      '<input name="%s"%s>',
+      $name,
+      parent::convert_array_to_html_attributes( $atts )
+    );
   } // input
 
 
@@ -30,13 +35,14 @@ class NtzForms extends NtzUtils {
     $compiled_options = '';
 
     if( is_array( $options ) && count( $options ) ){
-      foreach ( $options as $value => $display ) {
-        $compiled_options .= self::option( $display, $value, $selected );
+      foreach ( $options as $value => $text ) {
+        $compiled_options .= self::option( $text, $value, $selected );
       }
     }
 
     //  TODO: add optgroups
-    $select = sprintf( '<select name="%s"%s>%s</select>',
+    $select = sprintf(
+      '<select name="%s"%s>%s</select>',
       $name,
       parent::convert_array_to_html_attributes( $atts ),
       $compiled_options
@@ -48,12 +54,19 @@ class NtzForms extends NtzUtils {
 
   /**
    * Create an option tag
-   * @param  string $display  the text inside of the option tag
+   * @param  string $text     the text inside of the option tag
    * @param  string $value    the value of the element
    * @param  string $selected the value of the selected option
+   * @param  string $disabled disables the option
    * @return string
    */
-  protected static function option( $display, $value = null, $selected = null ){
-    return sprintf( '<option value="%s"%s>%s</option>', $value, selected( $selected, $value, false ), $display );
+  protected static function option( $text, $value = null, $selected = null, $disabled = null ){
+    return sprintf(
+      '<option value="%s"%s%s>%s</option>',
+      $value,
+      selected( $selected, $value, false ),
+      $disabled ? ' disabled' : '',
+      $text
+    );
   } // option
 }

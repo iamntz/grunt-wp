@@ -11,7 +11,8 @@ module.exports = function(grunt) {
         ,'<%= uglify.admin.src %>'
       ],
       options: {
-        globals: {
+        reporter: require('jshint-stylish')
+        ,globals: {
           jQuery   : true
           ,console : true
           ,module  : true
@@ -188,26 +189,21 @@ module.exports = function(grunt) {
         ,destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss'
         ,cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache'
       }
-    }
+    },
+
+
+    clean: {
+      build: ["assets/dist"]
+    },
   });
 
-
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-csscss');
-  grunt.loadNpmTasks('grunt-spritesmith');
-
-
+  require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('js', [ 'jshint', 'qunit', 'uglify']);
   grunt.registerTask('css', [ 'sprite', 'sass' ]);
   grunt.registerTask('assets', [ 'copy' ]);
   grunt.registerTask('admin', [ 'sass:admin', 'uglify:admin' ]);
 
-  grunt.registerTask('default', [ 'js', 'css', 'assets' ]);
+  grunt.registerTask('default', [ 'clean', 'js', 'css', 'assets' ]);
   grunt.registerTask('dev', ['watch']);
 };

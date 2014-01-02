@@ -1,45 +1,38 @@
 <?php
 
-class {%= projectNamespace %}Assets {
-  function __construct() {
-    add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_assets' ) );
-    add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_assets' ) );
-  }
+class {%= projectNamespace %}Assets extends \ntzlib\assets\Assets{
+  public function common(){}
+  public function localize(){}
 
+  public function admin(){
+    wp_register_style( '{%= name %}-admin', $this->theme_path . "/assets/dist/stylesheets/admin.css", array(), $this->asset_version, 'screen' );
 
-  public function enqueue_common_assets(){} // enqueue_common_assets
-
-
-  public function enqueue_admin_assets(){
-    $this->enqueue_common_assets();
-    wp_register_style( '{%= name %}-admin', THEME_PATH . "/assets/dist/stylesheets/admin.css", array(), ASSETS_VERSION, 'screen' );
-    wp_register_script( '{%= name %}-admin', THEME_PATH . "/assets/dist/javascripts/{%= name %}.admin.min.js", array(
-      "jquery"
-      ,"underscore"
-      ,"jquery-ui-draggable"
-      ,"jquery-ui-droppable"
-    ), ASSETS_VERSION, 'true' );
+    wp_register_script( '{%= name %}-admin', $this->theme_path . "/assets/dist/javascripts/{%= name %}.admin.min.js", array(
+      "jquery",
+      "underscore",
+      "jquery-ui-draggable",
+      "jquery-ui-droppable"
+    ), $this->asset_version, 'true' );
 
     wp_localize_script( '{%= name %}-admin', '{%= name %}_admin', array(
       'site_url' => esc_url( home_url( '/' ) ),
-      'theme_directory' => THEME_PATH,
+      'theme_directory' => $this->theme_path,
       'ajaxurl' => admin_url( 'admin-ajax.php' )
     ) );
 
     wp_enqueue_style( '{%= name %}-admin' );
     wp_enqueue_script( '{%= name %}-admin' );
-  } // enqueue_admin_assets
+  }
 
 
-  public function enqueue_assets(){
-    $this->enqueue_common_assets();
-    wp_register_style( '{%= name %}', THEME_PATH . "/assets/dist/stylesheets/screen.css", array(), ASSETS_VERSION, 'screen' );
-    wp_register_script( '{%= name %}-vendor', THEME_PATH . "/assets/dist/vendor/vendor.min.js", array(), ASSETS_VERSION, 'true' );
-    wp_register_script( '{%= name %}', THEME_PATH . "/assets/dist/javascripts/{%= name %}.min.js", array(
-      "jquery"
-      ,"{%= name %}-vendor"
-      ,"underscore"
-    ), ASSETS_VERSION, 'true' );
+  public function frontend(){
+    wp_register_style( '{%= name %}', $this->theme_path . "/assets/dist/stylesheets/screen.css", array(), $this->asset_version, 'screen' );
+    wp_register_script( '{%= name %}-vendor', $this->theme_path . "/assets/dist/vendor/vendor.min.js", array(), $this->asset_version, 'true' );
+    wp_register_script( '{%= name %}', $this->theme_path . "/assets/dist/javascripts/{%= name %}.min.js", array(
+      "jquery",
+      "{%= name %}-vendor",
+      "underscore"
+    ), $this->asset_version, 'true' );
 
     wp_enqueue_style( '{%= name %}' );
     wp_enqueue_script( '{%= name %}' );
@@ -47,16 +40,5 @@ class {%= projectNamespace %}Assets {
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ){
       wp_enqueue_script( 'comment-reply' );
     }
-
-    $stored_settings = (array) get_option( '{%= name %}-settings' );
-    $stored_settings = array_merge( array(
-      "foo" => "bar"
-    ), $stored_settings );
-
-    wp_localize_script( '{%= name %}', '{%= name %}', array(
-      'site_url' => esc_url( home_url( '/' ) ),
-      'ajaxurl'  => admin_url( 'admin-ajax.php' ),
-      'foo'      => $stored_settings['foo']
-    ) );
-  } // enqueue_assets
+  }
 }

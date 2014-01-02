@@ -8,7 +8,7 @@ class {%= projectNamespace %}ThemeInit {
 
 
   public function theme_setup(){
-    add_theme_support( 'post-thumbnails', array( 'post' ) );
+    add_theme_support( 'post-thumbnails' );
 
     register_nav_menus( array(
       'primary'   => __( 'Top primary menu', '{%= name %}' ),

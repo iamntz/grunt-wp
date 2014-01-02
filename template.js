@@ -68,7 +68,10 @@ exports.template = function(grunt, init, done) {
       "grunt-contrib-qunit": "~0.3.0",
       "grunt-csscss": "~0.6.1",
       "grunt-contrib-sass": "~0.5.0",
-      "grunt-spritesmith": "~1.11.2"
+      "grunt-spritesmith": "~1.11.2",
+      "grunt-contrib-clean": "~0.5.0",
+      "load-grunt-tasks": "~0.2.0",
+      "jshint-stylish": "~0.1.3"
     }
 
     init.writePackageJSON('package.json', packageJSON );
