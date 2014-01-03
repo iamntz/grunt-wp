@@ -1,0 +1,6 @@
+[submodule "mustache"]
+  path = includes/vendor/mustache
+  url = https://github.com/bobthecow/mustache.php.git
+[submodule "themes/{%= name %}/plugins/acf"]
+  path = plugins/acf
+  url = https://github.com/elliotcondon/acf.git
