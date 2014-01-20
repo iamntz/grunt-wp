@@ -8,3 +8,7 @@
   &:after { clear:both; }
   .lte7 & { zoom:1; }
 }
+
+%vertical-aligned {
+  @include vertical-align;
+}

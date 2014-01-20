@@ -1,0 +1,7 @@
+<Files ~ "^sftp-config.json|.gitignore|.sass-cache|.htaccess|.git|assets.json">
+  Order allow,deny
+  Deny from all
+</Files>
+
+
+Options -Indexes
