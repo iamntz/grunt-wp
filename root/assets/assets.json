@@ -1,0 +1,32 @@
+{
+  "js" : {
+    "app" : [
+      "assets/src/javascripts/*.js"
+      ,"assets/src/javascripts/**/*.js"
+      ,"!assets/src/javascripts/admin/*.js"
+      ,"!assets/src/javascripts/admin/**/*.js"
+    ],
+
+    "admin" : [
+      "assets/src/javascripts/admin/*.js"
+      ,"assets/src/javascripts/admin/**/*.js"
+    ],
+
+    "vendor" : []
+  }
+
+
+  ,"css" : {
+    "screen" : [
+      "assets/src/stylesheets/*.scss"
+      ,"assets/src/stylesheets/**/*.scss"
+      ,"!assets/src/stylesheets/admin/*.scss"
+      ,"!assets/src/stylesheets/admin/**/*.scss"
+      ]
+
+    ,"admin" : [
+      "assets/src/stylesheets/admin/*.scss"
+      ,"assets/src/stylesheets/admin/**/*.scss"
+    ]
+  }
+}

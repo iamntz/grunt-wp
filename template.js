@@ -10,17 +10,16 @@
 exports.description = 'Basic templates & structure for WordPress sites';
 
 exports.notes = '';
-exports.after = '';
+exports.after = "Don't forget to run `npm update --save-dev` & `npm install`!";
 exports.warnOn = '*';
 
 exports.template = function(grunt, init, done) {
-
   init.process({type: 'ntz-wp'}, [
 
   init.prompt('name'),
   {
     name:'projectNamespace',
-    message:'Project Namespace (leave empty to use project name)',
+    message:'Project Namespace (leave empty to use project name; no spaces, no dashes)',
     default: null
   },
   init.prompt('description', 'N/A'),
@@ -31,23 +30,29 @@ exports.template = function(grunt, init, done) {
   init.prompt('author_email'),
   init.prompt('author_url', "N/A"),
 
-  init.prompt('licenses', 'Private'),
+  init.prompt('licenses', 'GPL'),
 
   init.prompt('repository', ""),
   init.prompt('bugs', ""),
 
   ], function(err, props) {
-    props.projectNamespace = props.projectNamespace || ( props.name.charAt(0).toUpperCase() + props.name.slice(1).toLowerCase() );
+    props.projectNamespace = props.projectNamespace || props.name;
+    props.projectNamespace = props.projectNamespace.replace( /[^a-zA-Z]/g, '' );
+    props.projectNamespace = ( props.projectNamespace.charAt(0).toUpperCase() + props.projectNamespace.slice(1).toLowerCase() );
+
 
     var originalFiles = init.filesToCopy(props);
-    var files = {};
+    var files         = {};
+
 
     Object.keys(originalFiles).forEach(function(destpath) {
-      var newPath = destpath.replace('project_name', props.name);
+      var newPath    = destpath.replace('project_name', props.name);
       files[newPath] = originalFiles[destpath];
     });
 
+
     init.copyAndProcess(files, props, {});
+
 
     var packageJSON = {
       name       : props.name,
@@ -60,22 +65,22 @@ exports.template = function(grunt, init, done) {
 
 
     packageJSON.devDependencies = {
-      "grunt": "~0.4.1",
-      "grunt-contrib-uglify": "~0.2.4",
-      "grunt-contrib-jshint": "~0.6.4",
-      "grunt-contrib-watch": "~0.5.3",
-      "grunt-contrib-copy": "~0.4.1",
-      "grunt-contrib-qunit": "~0.3.0",
-      "grunt-csscss": "~0.6.1",
-      "grunt-contrib-sass": "~0.5.0",
-      "grunt-spritesmith": "~1.11.2",
-      "grunt-contrib-clean": "~0.5.0",
-      "load-grunt-tasks": "~0.2.0",
-      "time-grunt": "~0.2.5",
-      "jshint-stylish": "~0.1.3"
+      "grunt"                : "*",
+      "grunt-contrib-jshint" : "*",
+      "grunt-contrib-copy"   : "*",
+      "grunt-contrib-qunit"  : "*",
+      "grunt-csscss"         : "*",
+      "grunt-contrib-sass"   : "*",
+      "grunt-spritesmith"    : "*",
+      "grunt-contrib-clean"  : "*",
+      "load-grunt-tasks"     : "*",
+      "jshint-stylish"       : "*",
+      "grunt-contrib-uglify" : "*",
+      "grunt-contrib-watch"  : "*",
+      "time-grunt"           : "*"
     };
 
-    init.writePackageJSON('package.json', packageJSON );
+    init.writePackageJSON( 'package.json', packageJSON );
     done();
   });
 };
