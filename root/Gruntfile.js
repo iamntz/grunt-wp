@@ -120,7 +120,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        files: [ '<%= sass.app.src %>' ],
+        files: [ '<%= sass.screen.src %>' ],
         tasks: [ "css" ]
       },
 
