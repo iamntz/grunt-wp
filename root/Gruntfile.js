@@ -1,5 +1,10 @@
 module.exports = function(grunt) {
   require('time-grunt')(grunt);
+
+  require('jit-grunt')(grunt, {
+    sprite: 'grunt-spritesmith'
+  });
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     assets : grunt.file.readJSON('assets/assets.json'),
@@ -106,12 +111,6 @@ module.exports = function(grunt) {
     },
 
 
-    csscss: {
-      dist: {
-        src: [ '<%= sass.admin.dest %>', '<%= sass.screen.dest %>' ]
-      }
-    },
-
 
     watch: {
       options: {
@@ -147,8 +146,6 @@ module.exports = function(grunt) {
       }
     },
   });
-
-  require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('js', [ 'jshint', 'uglify']);
   grunt.registerTask('css', [ 'sprite', 'sass' ]);

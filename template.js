@@ -65,19 +65,19 @@ exports.template = function(grunt, init, done) {
 
 
     packageJSON.devDependencies = {
-      "grunt"                : "*",
-      "grunt-contrib-jshint" : "*",
-      "grunt-contrib-copy"   : "*",
-      "grunt-contrib-qunit"  : "*",
-      "grunt-csscss"         : "*",
-      "grunt-contrib-sass"   : "*",
-      "grunt-spritesmith"    : "*",
-      "grunt-contrib-clean"  : "*",
-      "load-grunt-tasks"     : "*",
-      "jshint-stylish"       : "*",
-      "grunt-contrib-uglify" : "*",
-      "grunt-contrib-watch"  : "*",
-      "time-grunt"           : "*"
+      "grunt"                  : "*",
+      "grunt-contrib-jshint"   : "*",
+      "grunt-contrib-copy"     : "*",
+      "grunt-contrib-sass"     : "*",
+      "grunt-spritesmith"      : "*",
+      "grunt-contrib-clean"    : "*",
+      "load-grunt-tasks"       : "*",
+      "jshint-stylish"         : "*",
+      "grunt-contrib-uglify"   : "*",
+      "grunt-contrib-watch"    : "*",
+      "time-grunt"             : "*",
+      "grunt-contrib-imagemin" : "*",
+      "jit-grunt"              : "*",
     };
 
     init.writePackageJSON( 'package.json', packageJSON );
