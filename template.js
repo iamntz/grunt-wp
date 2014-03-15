@@ -78,6 +78,7 @@ exports.template = function(grunt, init, done) {
       "time-grunt"             : "*",
       "grunt-contrib-imagemin" : "*",
       "jit-grunt"              : "*",
+      "extend"                 : "*",
     };
 
     init.writePackageJSON( 'package.json', packageJSON );

@@ -1,74 +1,112 @@
 module.exports = function(grunt) {
+  var extend = require( 'extend' );
+
   require('time-grunt')(grunt);
 
   require('jit-grunt')(grunt, {
     sprite: 'grunt-spritesmith'
   });
 
+  var jsFilesToLint = [ 'Gruntfile.js' ];
+
+  var filesToWatch = {
+    js  : [],
+    css : []
+  };
+
+  var package_json = grunt.file.readJSON('package.json');
+  var assets       = grunt.file.readJSON('assets/assets.json');
+
+  var javascripts  = assets.javascripts;
+  var jsKeys  = Object.keys( javascripts );
+  var uglifyFiles = [];
+
+  jsKeys.forEach(function( taskName ){
+    var task    = javascripts[taskName];
+    var options = task.options || {};
+    var dest    = task.dest || 'assets/dist/javascripts/' + taskName + '.min.js';
+
+    if( !task.src ){ return; }
+
+    if( !options.skipUglify ){
+      uglifyFiles[taskName] = {
+        src : task.src,
+        dest: dest
+      };
+    }
+
+    if( !options.skipLint ){
+      jsFilesToLint.push( task.src );
+    }
+
+    if( !options.skipWatch ){
+      filesToWatch.js.push({
+        files : task.src,
+        tasks : [ 'js' ]
+      });
+    }
+  });
+
+
+  var stylesheets  = assets.stylesheets;
+  var cssKeys = Object.keys( stylesheets );
+  var sassFiles = [];
+
+  cssKeys.forEach(function( taskName ){
+    var task    = stylesheets[taskName];
+    var options = typeof task.options !== 'undefined' ? task.options : {};
+    var dest    = task.dest || 'assets/dist/stylesheets/' + taskName + '.css';
+
+    if( !task.src ){ return; }
+
+    sassFiles[taskName] = {
+      src : task.src,
+      dest: dest
+    };
+
+    if( !options.skipWatch ){
+      filesToWatch.css.push({
+        files : task.src,
+        tasks : [ 'css' ]
+      });
+    }
+  });
+
+
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    assets : grunt.file.readJSON('assets/assets.json'),
+    pkg: package_json,
 
     jshint: {
-      files: [
-        'Gruntfile.js'
-        ,'<%= uglify.app.src %>'
-        ,'<%= uglify.admin.src %>'
-      ],
+      files: jsFilesToLint,
       options: {
-        reporter: require('jshint-stylish')
-        ,globals: {
-          jQuery   : true
-          ,console : true
-          ,module  : true
-          ,document: true
+        reporter: require('jshint-stylish'),
+        globals: {
+          jQuery   : true,
+          console : true,
+          module  : true,
+          document: true
         },
-        laxcomma : true
-        ,laxbreak: true
-        ,sub     : true
+        laxcomma: true,
+        laxbreak: true,
+        sub     : true
       }
     },
 
 
-    uglify: {
+    uglify: extend( uglifyFiles, {
       options : {
         sourceMap: function( path ){ return path + 'map'; }
-      }
-
-      ,app: {
-        src : '<%= assets.js.app %>',
-        dest: 'assets/dist/javascripts/<%= pkg.name %>.min.js'
-      }
-
-      ,admin: {
-        src : '<%= assets.js.admin %>',
-        dest: 'assets/dist/javascripts/<%= pkg.name %>.admin.min.js'
-      }
-
-      ,vendor : {
-        src : '<%= assets.js.vendor %>',
-        dest: 'assets/dist/vendor/vendor.min.js'
-      }
-    },
+      },
+    }),
 
 
-
-    sass: {
+    sass: extend( sassFiles, {
       options: {
         style    : 'compressed',
         sourcemap: true,
         // compass  : true
-      },
-
-      screen: {
-        src : '<%= assets.css.screen %>',
-        dest: 'assets/dist/stylesheets/screen.css'
-      },
-      admin: {
-        src : '<%= assets.css.admin %>',
-        dest: 'assets/dist/stylesheets/admin.css'
       }
-    },
+    }),
 
 
     copy : {
@@ -78,9 +116,9 @@ module.exports = function(grunt) {
             expand: true,
             cwd: 'assets/src',
             src: [
-              'images/*'
-              ,'images/**/*'
-              ,'fonts/**/*'
+              'images/*',
+              'images/**/*',
+              'fonts/**/*'
             ],
             dest: 'assets/dist/'
           }
@@ -91,15 +129,15 @@ module.exports = function(grunt) {
 
     sprite:{
       all: {
-        src         : ['assets/src/images/sprites/*.png']
-        ,destImg    : 'assets/dist/images/sprites.png'
-        ,imgPath    : '../images/sprites.png'
-        ,algorithm  : 'binary-tree'
-        ,padding    : 10
-        ,engine     : 'auto'
-        ,destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss'
-        ,cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache'
-        ,engineOpts : {
+        src         : ['assets/src/images/sprites/*.png'],
+        destImg    : 'assets/dist/images/sprites.png',
+        imgPath    : '../images/sprites.png',
+        algorithm  : 'binary-tree',
+        padding    : 10,
+        engine     : 'auto',
+        destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss',
+        cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache',
+        engineOpts : {
           'imagemagick': true
         }
       }
@@ -112,45 +150,26 @@ module.exports = function(grunt) {
 
 
 
-    watch: {
+    watch: extend( filesToWatch.js, filesToWatch.css, {
       options: {
-        nospawn       : true
-        ,livereload   : true
-      },
-
-      css: {
-        files: [ '<%= sass.screen.src %>' ],
-        tasks: [ "css" ]
-      },
-
-      admin : {
-        files: [
-          '<%= sass.admin.src %>'
-          ,'<%= uglify.admin.src %>'
-        ],
-        tasks : [ "admin" ]
+        nospawn       : true,
+        livereload   : true
       },
 
       assets : {
         files: [
-          'assets/src/images/*'
-          ,'assets/src/images/**/*'
-          ,'assets/src/fonts/**/*'
+          'assets/src/images/*',
+          'assets/src/images/**/*',
+          'assets/src/fonts/**/*'
         ],
         tasks: [ 'copy' ]
-      },
-
-      js : {
-        files: [ '<%= uglify.app.src %>' ],
-        tasks: [ 'js' ]
       }
-    },
+    })
   });
 
   grunt.registerTask('js', [ 'jshint', 'uglify']);
   grunt.registerTask('css', [ 'sprite', 'sass' ]);
   grunt.registerTask('assets', [ 'copy' ]);
-  grunt.registerTask('admin', [ 'sass:admin', 'uglify:admin' ]);
 
   grunt.registerTask('default', [ 'clean', 'js', 'css', 'assets' ]);
   grunt.registerTask('dev', [ 'default', 'watch' ]);

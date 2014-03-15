@@ -1,32 +1,31 @@
 {
-  "js" : {
-    "app" : [
-      "assets/src/javascripts/*.js"
-      ,"assets/src/javascripts/**/*.js"
-      ,"!assets/src/javascripts/admin/*.js"
-      ,"!assets/src/javascripts/admin/**/*.js"
-    ],
-
-    "admin" : [
-      "assets/src/javascripts/admin/*.js"
-      ,"assets/src/javascripts/admin/**/*.js"
-    ],
-
-    "vendor" : []
-  }
-
-
-  ,"css" : {
-    "screen" : [
-      "assets/src/stylesheets/*.scss"
-      ,"assets/src/stylesheets/**/*.scss"
-      ,"!assets/src/stylesheets/admin/*.scss"
-      ,"!assets/src/stylesheets/admin/**/*.scss"
+  "javascripts" : {
+    "<%= pkg.name %>" : {
+      "src" : [
+        "assets/src/javascripts/<%= pkg.name %>/*.js",
+        "assets/src/javascripts/<%= pkg.name %>/**/*.js"
       ]
+    },
 
-    ,"admin" : [
-      "assets/src/stylesheets/admin/*.scss"
-      ,"assets/src/stylesheets/admin/**/*.scss"
-    ]
+    "<%= pkg.name %>.vendor" : {
+      "options" : {
+        "skipWatch": true,
+        "skipLint" : true
+      },
+      "src" : [
+        "assets/src/vendor/*.js",
+        "assets/src/vendor/**/*.js"
+      ]
+    }
+  },
+
+
+  "stylesheets" : {
+    "screen" : {
+      "src" : [
+        "assets/src/stylesheets/screen/screen.scss",
+        "assets/src/stylesheets/screen/**/*.scss"
+      ]
+    }
   }
 }

@@ -126,7 +126,10 @@ input[type="search"] {
   box-sizing:content-box;
 }
 
-html { overflow-y:scroll; }
+html {
+  overflow-y:scroll;
+  font-size:62.5%;
+}
 
 /* common classes
 ------------------------------------------------------------- */
@@ -144,8 +147,16 @@ html { overflow-y:scroll; }
 ::-moz-selection{}
 ::selection {}
 
-a:link {}
 a { outline:none; }
 a:focus { outline:1px dotted #eee; }
 a:hover, a:focus {}
 
+
+img {
+  max-width:100%;
+  height:auto;
+}
+
+body {
+  font: 400 1em/1.4 Arial, Helvetica, Verdana;
+}

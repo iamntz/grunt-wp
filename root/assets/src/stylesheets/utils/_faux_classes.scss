@@ -12,3 +12,7 @@
 %vertical-aligned {
   @include vertical-align;
 }
+
+%fix-touch-scroll{
+  -webkit-overflow-scrolling: touch;
+}
