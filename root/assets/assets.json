@@ -1,15 +1,14 @@
 {
   "javascripts" : {
-    "<%= pkg.name %>" : {
+    "{%= name %}" : {
       "src" : [
-        "assets/src/javascripts/<%= pkg.name %>/*.js",
-        "assets/src/javascripts/<%= pkg.name %>/**/*.js"
+        "assets/src/javascripts/{%= name %}/*.js",
+        "assets/src/javascripts/{%= name %}/**/*.js"
       ]
     },
 
-    "<%= pkg.name %>.vendor" : {
+    "{%= name %}.vendor" : {
       "options" : {
-        "skipWatch": true,
         "skipLint" : true
       },
       "src" : [

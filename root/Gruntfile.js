@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
   var extend = require( 'extend' );
+  var args = process.argv;
+
+  var isDev = args.indexOf( 'dev' ) != -1;
 
   require('time-grunt')(grunt);
 
@@ -9,10 +12,7 @@ module.exports = function(grunt) {
 
   var jsFilesToLint = [ 'Gruntfile.js' ];
 
-  var filesToWatch = {
-    js  : [],
-    css : []
-  };
+  var filesToWatch = {};
 
   var package_json = grunt.file.readJSON('package.json');
   var assets       = grunt.file.readJSON('assets/assets.json');
@@ -39,14 +39,11 @@ module.exports = function(grunt) {
       jsFilesToLint.push( task.src );
     }
 
-    if( !options.skipWatch ){
-      filesToWatch.js.push({
-        files : task.src,
-        tasks : [ 'js' ]
-      });
-    }
+    filesToWatch[taskName] = {
+      files : task.src,
+      tasks : [ 'js' ]
+    };
   });
-
 
   var stylesheets  = assets.stylesheets;
   var cssKeys = Object.keys( stylesheets );
@@ -65,16 +62,28 @@ module.exports = function(grunt) {
     };
 
     if( !options.skipWatch ){
-      filesToWatch.css.push({
+      filesToWatch[taskName] = {
         files : task.src,
         tasks : [ 'css' ]
-      });
+      };
     }
   });
 
 
+  var defaultSpriteOptions = {
+    algorithm  : 'binary-tree',
+    padding    : 10,
+    engine     : 'auto',
+    cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache',
+    engineOpts : {
+      'imagemagick': true
+    }
+  };
+
+
   grunt.initConfig({
     pkg: package_json,
+
 
     jshint: {
       files: jsFilesToLint,
@@ -95,7 +104,7 @@ module.exports = function(grunt) {
 
     uglify: extend( uglifyFiles, {
       options : {
-        sourceMap: function( path ){ return path + 'map'; }
+        sourceMap: !isDev ? false : function( path ){ return path + 'map'; }
       },
     }),
 
@@ -103,7 +112,7 @@ module.exports = function(grunt) {
     sass: extend( sassFiles, {
       options: {
         style    : 'compressed',
-        sourcemap: true,
+        sourcemap: isDev,
         // compass  : true
       }
     }),
@@ -128,19 +137,17 @@ module.exports = function(grunt) {
 
 
     sprite:{
-      all: {
-        src         : ['assets/src/images/sprites/*.png'],
+      all: extend( defaultSpriteOptions, {
+        src        : [ 'assets/src/images/sprites/*.png' ],
         destImg    : 'assets/dist/images/sprites.png',
         imgPath    : '../images/sprites.png',
-        algorithm  : 'binary-tree',
-        padding    : 10,
-        engine     : 'auto',
         destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss',
-        cssTemplate: 'assets/helpers/spritesmith.sass.template.mustache',
-        engineOpts : {
-          'imagemagick': true
-        }
-      }
+
+        cssOpts : {
+          "baseClass" : "spr",
+          "functions" : true
+        },
+      })
     },
 
 
@@ -149,8 +156,7 @@ module.exports = function(grunt) {
     },
 
 
-
-    watch: extend( filesToWatch.js, filesToWatch.css, {
+    watch: extend( filesToWatch, {
       options: {
         nospawn       : true,
         livereload   : true
