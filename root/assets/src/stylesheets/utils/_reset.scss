@@ -160,3 +160,25 @@ img {
 body {
   font: 400 1em/1.4 Arial, Helvetica, Verdana;
 }
+
+
+.visible-medium {
+  @include respond-to(small-screens){
+    display:none;
+  }
+}
+
+.visible-small {
+  @include respond-to(medium-screens){
+    display:none;
+  }
+  @include respond-to(wide-screens){
+    display:none;
+  }
+}
+
+.visible-wide {
+  @include respond-to(medium-screens){
+    display:none;
+  }
+}
