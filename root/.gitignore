@@ -45,3 +45,14 @@ build/config/buildinfo.properties
 
 node_modules
 views/cache
+vendor/
+themes/oras/assets/dist/**/*.map
+plugins/*
+uploads/*
+mu-plugins/*
+!mu-plugins/{%= name %}/*
+!mu-plugins/{%= name %}/**/*
+!mu-plugins/{%= name %}.php
+
+
+*.lnk

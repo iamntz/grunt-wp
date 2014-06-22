@@ -1,6 +1,0 @@
-[submodule "themes/{%= name %}/plugins/acf"]
-  path = themes/{%= name %}/plugins/acf
-  url = https://github.com/elliotcondon/acf.git
-[submodule "themes/{%= name %}/includes/vendor/mustache"]
-  path = themes/{%= name %}/includes/vendor/mustache
-  url = https://github.com/bobthecow/mustache.php.git

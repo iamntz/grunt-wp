@@ -7,6 +7,8 @@
 6. (optional) Install [CSSCSS](http://zmoazeni.github.io/csscss/)
 7. Install [Grunt](http://gruntjs.com/) by running `npm install -g grunt-cli`
 
+#### How to use?
+You need to init the project inside of `wp-content` folder (remove all files within this folder then run `grunt-init ntz-wp`). After that, all commands needs to be ran inside of `wp-content/themes/project_name/assets`.
 
 #### Commands that needs to be run for the first time on every project
 1. `npm update --save-dev` to get latest version of all Grunt plugins;
@@ -16,6 +18,8 @@
 
 #### List All Available Commands
 `grunt` will run all tasks. For development, you should run `grunt dev` which is an alias for `grunt` and `grunt watch`. For a completely list of tasks, please run `grunt --help`
+
+
 
 
 #### Useful Tools

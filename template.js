@@ -22,6 +22,7 @@ exports.template = function(grunt, init, done) {
     message:'Project Namespace (leave empty to use project name; no spaces, no dashes)',
     default: null
   },
+
   init.prompt('description', 'N/A'),
   init.prompt('version', "0.0.1"),
 
@@ -40,19 +41,18 @@ exports.template = function(grunt, init, done) {
     props.projectNamespace = props.projectNamespace.replace( /[^a-zA-Z]/g, '' );
     props.projectNamespace = ( props.projectNamespace.charAt(0).toUpperCase() + props.projectNamespace.slice(1).toLowerCase() );
 
-
     var originalFiles = init.filesToCopy(props);
     var files         = {};
 
+    // removing traces of gitmodules
+    delete originalFiles['themes/project_name/assets/.git'];
 
     Object.keys(originalFiles).forEach(function(destpath) {
       var newPath    = destpath.replace('project_name', props.name);
       files[newPath] = originalFiles[destpath];
     });
 
-
     init.copyAndProcess(files, props, {});
-
 
     var packageJSON = {
       name       : props.name,
@@ -82,7 +82,7 @@ exports.template = function(grunt, init, done) {
       "extend"                 : "*",
     };
 
-    init.writePackageJSON( 'package.json', packageJSON );
+    init.writePackageJSON( 'themes/' + props.name + '/assets/package.json', packageJSON );
     done();
   });
 };
