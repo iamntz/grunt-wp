@@ -66,6 +66,7 @@ exports.template = function(grunt, init, done) {
 
     packageJSON.devDependencies = {
       "grunt"                  : "*",
+      "grunt-contrib-concat"   : "*",
       "grunt-contrib-jshint"   : "*",
       "grunt-contrib-copy"     : "*",
       "grunt-contrib-sass"     : "*",

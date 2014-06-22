@@ -20,20 +20,26 @@ module.exports = function(grunt) {
   var javascripts  = assets.javascripts;
   var jsKeys  = Object.keys( javascripts );
   var uglifyFiles = [];
+  var concatFiles = [];
 
   jsKeys.forEach(function( taskName ){
     var task    = javascripts[taskName];
     var options = task.options || {};
-    var dest    = task.dest || 'assets/dist/javascripts/' + taskName + '.min.js';
+    var dest    = task.dest || 'assets/dist/javascripts/' + taskName;
 
     if( !task.src ){ return; }
 
     if( !options.skipUglify ){
       uglifyFiles[taskName] = {
         src : task.src,
-        dest: dest
+        dest: dest + '.min.js'
       };
     }
+
+    concatFiles[taskName] = {
+      src : task.src,
+      dest: dest + '.dev.js'
+    };
 
     if( !options.skipLint ){
       jsFilesToLint.push( task.src );
@@ -108,10 +114,15 @@ module.exports = function(grunt) {
       },
     }),
 
+    concat: extend( concatFiles, {
+      options : {
+      },
+    }),
+
 
     sass: extend( sassFiles, {
       options: {
-        style    : 'compressed',
+        style    : isDev ? 'expanded' : 'compressed',
         sourcemap: isDev,
         // compass  : true
       }
@@ -137,11 +148,11 @@ module.exports = function(grunt) {
 
 
     sprite:{
-      all: extend( defaultSpriteOptions, {
-        src        : [ 'assets/src/images/sprites/*.png' ],
-        destImg    : 'assets/dist/images/sprites.png',
-        imgPath    : '../images/sprites.png',
-        destCSS    : 'assets/src/stylesheets/sprites/_sprites.scss',
+      spr: extend( defaultSpriteOptions, {
+        src        : [ 'assets/src/images/sprites/spr/*.png' ],
+        destImg    : 'assets/dist/images/spr.png',
+        imgPath    : '../images/spr.png',
+        destCSS    : 'assets/src/stylesheets/sprites/_spr.scss',
 
         cssOpts : {
           "baseClass" : "spr",
@@ -152,7 +163,7 @@ module.exports = function(grunt) {
 
 
     clean: {
-      build: ["assets/dist"]
+      build: [ "assets/src/stylesheets/sprites/", "assets/dist"]
     },
 
 
@@ -173,7 +184,7 @@ module.exports = function(grunt) {
     })
   });
 
-  grunt.registerTask('js', [ 'jshint', 'uglify']);
+  grunt.registerTask('js', [ 'jshint', ( isDev ? 'concat' : 'uglify' ) ] );
   grunt.registerTask('css', [ 'sprite', 'sass' ]);
   grunt.registerTask('assets', [ 'copy' ]);
 
