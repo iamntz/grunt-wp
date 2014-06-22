@@ -1,0 +1,3 @@
+[submodule "root/wp-content/themes/project_name/assets"]
+	path = root/wp-content/themes/project_name/assets
+	url = git@github.com:iamntz/base-assets.git
