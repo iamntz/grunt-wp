@@ -46,6 +46,7 @@ exports.template = function(grunt, init, done) {
 
     // removing traces of gitmodules
     delete originalFiles['themes/project_name/assets/.git'];
+    delete originalFiles['themes/project_name/assets/package.json'];
 
     Object.keys(originalFiles).forEach(function(destpath) {
       var newPath    = destpath.replace('project_name', props.name);
