@@ -5,9 +5,9 @@ class {%= projectNamespace %}Assets extends \ntzlib\assets\Assets{
   public function localize(){}
 
   public function admin(){
-    wp_register_style( '{%= name %}-admin', $this->theme_path . "/assets/dist/stylesheets/admin.{$this->min_or_dev}.css", array(), $this->asset_version, 'screen' );
+    wp_register_style( '{%= name %}-admin', $this->theme_path . "/assets/dist/stylesheets/admin{$this->min_or_dev}.css", array(), $this->asset_version, 'screen' );
 
-    wp_register_script( '{%= name %}-admin', $this->theme_path . "/assets/dist/javascripts/{%= name %}.admin.{$this->min_or_dev}.js", array(
+    wp_register_script( '{%= name %}-admin', $this->theme_path . "/assets/dist/javascripts/{%= name %}.admin{$this->min_or_dev}.js", array(
       "jquery",
       "underscore",
       "jquery-ui-draggable",
@@ -26,10 +26,10 @@ class {%= projectNamespace %}Assets extends \ntzlib\assets\Assets{
 
 
   public function frontend(){
-    wp_register_style( '{%= name %}', $this->theme_path . "/assets/dist/stylesheets/screen.{$this->min_or_dev}.css", array(), $this->asset_version, 'screen' );
+    wp_register_style( '{%= name %}', $this->theme_path . "/assets/dist/stylesheets/screen{$this->min_or_dev}.css", array(), $this->asset_version, 'screen' );
 
-    wp_register_script( '{%= name %}-vendor', $this->theme_path . "/assets/dist/vendor/vendor.{$this->min_or_dev}.js", array(), $this->asset_version, 'true' );
-    wp_register_script( '{%= name %}', $this->theme_path . "/assets/dist/javascripts/{%= name %}.{$this->min_or_dev}.js", array(
+    wp_register_script( '{%= name %}-vendor', $this->theme_path . "/assets/dist/vendor/vendor{$this->min_or_dev}.js", array(), $this->asset_version, 'true' );
+    wp_register_script( '{%= name %}', $this->theme_path . "/assets/dist/javascripts/{%= name %}{$this->min_or_dev}.js", array(
       "jquery",
       "{%= name %}-vendor",
       "underscore"
