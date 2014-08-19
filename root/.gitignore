@@ -49,8 +49,7 @@ vendor/
 
 plugins/*
 uploads/*
-mu-plugins/*
-!mu-plugins/{%= name %}/*
+!mu-plugins/project_name/**/*
 !mu-plugins/{%= name %}/**/*
 !mu-plugins/{%= name %}.php
 
