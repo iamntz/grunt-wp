@@ -1,6 +1,5 @@
 <?php namespace ntzlib\utils;
 
-
 class Utils {
 
   /**
@@ -17,7 +16,7 @@ class Utils {
     }
 
     return $parsed_attributes;
-  } // convert_array_to_html_attributes
+  }
 
 
   /**
@@ -40,5 +39,13 @@ class Utils {
     }
 
     return $attribute;
-  } // convert_array_to_html_attribute
+  }
+
+
+
+  public static function hash( $string, $len = 10 ){
+    $hash = sha1( serialize( $string ) );
+
+    return substr( $hash, 0, $len );
+  }
 }
